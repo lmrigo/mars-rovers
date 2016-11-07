@@ -1,33 +1,44 @@
 //mars.js
 
-/* FACES */
-var faces = ['N', 'E', 'S', 'W']
-var rightFace = function (face) {
-  var faceIdx = faces.indexOf(face)
-  if (faceIdx < faces.length-1) {
-    return faces[++faceIdx]
-  } else {
-    return faces[0]
+/* ROVER */
+
+function Rover(x, y, face, maxX, maxY) {
+  this.x = x
+  this.y = y
+  this.face = face
+  this.maxX = maxX
+  this.maxY = maxY
+  this.faces = ['N', 'E', 'S', 'W']
+  this.turnLeft = function () {
+    var faceIdx = this.faces.indexOf(this.face)
+    if (faceIdx > 0) {
+      this.face = this.faces[--faceIdx]
+    } else {
+      this.face = this.faces[this.faces.length-1]
+    }
   }
-}
-var leftFace = function (face) {
-  var faceIdx = faces.indexOf(face)
-  if (faceIdx > 0) {
-    return faces[--faceIdx]
-  } else {
-    return faces[faces.length-1]
+  this.turnRight = function () {
+    var faceIdx = this.faces.indexOf(this.face)
+    if (faceIdx < this.faces.length-1) {
+      this.face = this.faces[++faceIdx]
+    } else {
+      this.face = this.faces[0]
+    }
+  }
+  this.move = function () {
+    switch (this.face) {
+      case 'N': if (this.y < this.maxY) { this.y++ };break;
+      case 'E': if (this.x < this.maxX) { this.x++ };break;
+      case 'S': if (this.y > 0) { this.y-- };break;
+      case 'W': if (this.x > 0) { this.x-- };break;
+    }
+  }
+  this.toString = function () {
+    return [this.x, this.y, this.face].join(' ')
   }
 }
 
-var move = function (x, y, face) {
-  switch (face) {
-    case 'N': y++;break;
-    case 'E': x++;break;
-    case 'S': y--;break;
-    case 'W': x--;break;
-  }
-  return [x, y]
-}
+/* DEPLOY */
 
 var deployRovers = function (input) {
   var outputLines = []
@@ -41,23 +52,19 @@ var deployRovers = function (input) {
 
   for (var i=1; i<inputLines.length; i=i+2) {
     var roverPosition = inputLines[i].split(' ')
-    var roverX = roverPosition[0]
-    var roverY = roverPosition[1]
-    var roverFace = roverPosition[2]
+    var rover = new Rover(roverPosition[0], roverPosition[1], roverPosition[2], maxX, maxY)
 
     var path = inputLines[i+1].split('')
     $.each(path, function(idx, instr) {
       if (instr === 'L') { // rotate left
-        roverFace = leftFace(roverFace)
+        rover.turnLeft()
       } else if (instr === 'R') { // rotate right
-        roverFace = rightFace(roverFace)
+        rover.turnRight()
       } else if (instr === 'M') { // move
-        var newXY = move(roverX, roverY, roverFace)
-        roverX = newXY[0]
-        roverY = newXY[1]
+        rover.move()
       }
     })
-    outputLines.push([roverX, roverY, roverFace].join(' '))
+    outputLines.push(rover.toString())
   }
   return outputLines.join('\n')
 }

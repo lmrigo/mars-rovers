@@ -36,25 +36,49 @@ QUnit.test('sample test case', function(assert) {
 
 /* faces */
 QUnit.test('right face N', function(assert) {
-  assert.equal(rightFace('N'), 'E')
+  var rov = new Rover(0, 0, 'N', 0, 0)
+  rov.turnRight()
+  assert.equal(rov.face, 'E')
 })
 
 QUnit.test('right face W', function(assert) {
-  assert.equal(rightFace('W'), 'N')
+  var rov = new Rover(0, 0, 'W', 0, 0)
+  rov.turnRight()
+  assert.equal(rov.face, 'N')
 })
 
 QUnit.test('left face S', function(assert) {
-  assert.equal(leftFace('S'), 'E')
+  var rov = new Rover(0, 0, 'S', 0, 0)
+  rov.turnLeft()
+  assert.equal(rov.face, 'E')
 })
 
 QUnit.test('left face N', function(assert) {
-  assert.equal(leftFace('N'), 'W')
+  var rov = new Rover(0, 0, 'N', 0, 0)
+  rov.turnLeft()
+  assert.equal(rov.face, 'W')
 })
 
 /* movements */
 QUnit.test('move N', function(assert) {
+  var rov = new Rover(0, 0, 'N', 1, 1)
+  rov.move()
   var expectedOutput = [0, 1]
-  assert.deepEqual(move(0, 0, 'N'), expectedOutput)
+  assert.deepEqual([rov.x, rov.y], expectedOutput)
+})
+
+QUnit.test('move S invalid', function(assert) {
+  var rov = new Rover(0, 0, 'S', 1, 1)
+  rov.move()
+  var expectedOutput = [0, 0]
+  assert.deepEqual([rov.x, rov.y], expectedOutput)
+})
+
+QUnit.test('move W invalid', function(assert) {
+  var rov = new Rover(0, 0, 'W', 1, 1)
+  rov.move()
+  var expectedOutput = [0, 0]
+  assert.deepEqual([rov.x, rov.y], expectedOutput)
 })
 
 
