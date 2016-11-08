@@ -4,17 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Mars Rovers</title>
-  <link rel="stylesheet" href="libs/qunitjs/qunit/qunit.css">
-  <!-- <link rel="stylesheet" href="mars.css"> -->
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
-  <script src="libs/qunitjs/qunit/qunit.js"></script>
+  <h1>Mars Rovers</h1>
+  <div id="input-block" style="float: left;">
+    <b>Input</b>
+    <br>
+    <textarea id="input" rows="10" cols="20">
+5 5
+1 2 N
+LMLMLMLMM
+3 3 E
+MMRMMRMRRM
+    </textarea>
+    <button type="button" onclick="deployRoversUI()" style="float: right;">
+      Deploy Rovers
+    </button>
+  </div>
+  <div id="output-block" style="float: left;">
+    <b>Output</b>
+    <br>
+    <textarea id="output" rows="10" cols="20">
+    </textarea>
+  </div>
+  <!-- libs -->
   <script src="libs/jquery.min.js"></script>
   <!-- code -->
   <script src="mars.js"></script>
-  <!-- tests -->
-  <script src="qtests.js"></script>
 </body>
 </html>

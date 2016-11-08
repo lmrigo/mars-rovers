@@ -1,7 +1,5 @@
-// samples
-// assert.ok( 1 == "1", "Passed!" )
-// assert.equal( 2*2*2, 8)
-// assert.deepEqual([['oi',2]], [['oi',2]])
+/* Tests for Mars Rovers */
+
 
 /* invalid inputs */
 QUnit.test('empty input', function(assert) {
@@ -53,6 +51,19 @@ MMRMMRMRRM`
   assert.equal(deployRovers(input), expectedOutput)
 })
 
+QUnit.test('horizontal test case', function(assert) {
+  var input =
+`20 0
+0 0 W
+MRMRRMLMMMMM
+20 0 E
+MRMLLMRRRMMM`
+  var expectedOutput =
+`5 0 E
+17 0 W`
+  assert.equal(deployRovers(input), expectedOutput)
+})
+
 QUnit.test('crashing rover doesnt move', function(assert) {
   var input =
 `5 5
@@ -65,7 +76,6 @@ L`
 3 3 N`
   assert.equal(deployRovers(input), expectedOutput)
 })
-
 
 QUnit.test('crashing rovers dont move', function(assert) {
   var input =
@@ -80,7 +90,26 @@ MRMMMLML`
   assert.equal(deployRovers(input), expectedOutput)
 })
 
-/* faces */
+QUnit.test('big test case', function(assert) {
+  var input =
+`40 40
+2 4 W
+MRLMRMRMLRM
+23 6 E
+MRMLLMRMMM
+6 36 S
+MRMMRRMLLM
+15 23 N
+MRM`
+  var expectedOutput =
+`2 5 E
+27 6 E
+4 35 W
+16 24 E`
+  assert.equal(deployRovers(input), expectedOutput)
+})
+
+/* turning faces */
 QUnit.test('right face N', function(assert) {
   var rov = new Rover(0, 0, 'N', [], 0, 0)
   rov.turnRight()
@@ -127,7 +156,7 @@ QUnit.test('move W invalid', function(assert) {
   assert.deepEqual([rov.x, rov.y], expectedOutput)
 })
 
-/* screen styling */
+/* test api screen styling */
 QUnit.done(function (details) {
   var body = document.getElementsByTagName('body')[0]
   if (details.failed > 0) {

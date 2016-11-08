@@ -69,8 +69,8 @@ function Rover(x, y, face, path, maxX, maxY) {
 var deployRovers = function (input) {
   if (!input) { return } // no input provided
   var outputLines = []
-  var inputLines = input.split('\n')
-  var gridSize = inputLines[0].split(' ')
+  var inputLines = input.trim().split('\n')
+  var gridSize = inputLines[0].trim().split(' ')
   var maxX = parseInt(gridSize[0])
   var maxY = parseInt(gridSize[1])
 
@@ -110,3 +110,10 @@ var deployRovers = function (input) {
 
   return outputLines.join('\n')
 }
+
+
+var deployRoversUI = function () {
+  var input = $('#input').val()
+  var output = deployRovers(input)
+  $('#output').val(output)
+} 
