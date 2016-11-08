@@ -5,12 +5,31 @@
 
 /* invalid inputs */
 QUnit.test('empty input', function(assert) {
-  var input = ''
-  var expectedOutput = 'ERROR'
-  assert.equal(deployRovers(input), expectedOutput)
+  assert.equal(deployRovers(), undefined)
+  assert.equal(deployRovers(''), undefined)
+})
+
+QUnit.test('rover without instructions line', function(assert) {
+    var input =
+    '5 5\n' +
+    '0 0 N'
+  assert.equal(deployRovers(input), 'invalid input')
 })
 
 /* valid inputs */
+QUnit.test('no rovers', function(assert) {
+  var input = '3 3'
+  assert.equal(deployRovers(input), '')
+})
+
+QUnit.test('rover with empty instructions', function(assert) {
+    var input =
+    '5 5\n' +
+    '0 0 N\n' +
+    ''
+  assert.equal(deployRovers(input), '0 0 N')
+})
+
 QUnit.test('simple move north', function(assert) {
   var input =
     '5 5\n' +
@@ -31,6 +50,19 @@ QUnit.test('sample test case', function(assert) {
   var expectedOutput =
     '1 3 N\n' +
     '5 1 E'
+  assert.equal(deployRovers(input), expectedOutput)
+})
+
+QUnit.test('sample test case', function(assert) {
+  var input =
+`5 5
+1 2 N
+LMLMLMLMM
+3 3 E
+MMRMMRMRRM`
+  var expectedOutput =
+`1 3 N
+5 1 E`
   assert.equal(deployRovers(input), expectedOutput)
 })
 

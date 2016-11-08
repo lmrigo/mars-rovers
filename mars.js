@@ -41,11 +41,9 @@ function Rover(x, y, face, maxX, maxY) {
 /* DEPLOY */
 
 var deployRovers = function (input) {
+  if (!input) { return }
   var outputLines = []
   var inputLines = input.split('\n')
-  if (!inputLines || inputLines.length < 3) {
-    return 'ERROR'
-  }
   var gridSize = inputLines[0].split(' ')
   var maxX = gridSize[0]
   var maxY = gridSize[1]
@@ -54,6 +52,7 @@ var deployRovers = function (input) {
     var roverPosition = inputLines[i].split(' ')
     var rover = new Rover(roverPosition[0], roverPosition[1], roverPosition[2], maxX, maxY)
 
+    if (inputLines[i+1] === undefined) { return 'invalid input' }
     var path = inputLines[i+1].split('')
     $.each(path, function(idx, instr) {
       if (instr === 'L') { // rotate left
