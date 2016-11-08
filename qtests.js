@@ -42,19 +42,6 @@ QUnit.test('simple move north', function(assert) {
 
 QUnit.test('sample test case', function(assert) {
   var input =
-    '5 5\n' +
-    '1 2 N\n' +
-    'LMLMLMLMM\n' +
-    '3 3 E\n'+
-    'MMRMMRMRRM'
-  var expectedOutput =
-    '1 3 N\n' +
-    '5 1 E'
-  assert.equal(deployRovers(input), expectedOutput)
-})
-
-QUnit.test('sample test case', function(assert) {
-  var input =
 `5 5
 1 2 N
 LMLMLMLMM
@@ -66,53 +53,79 @@ MMRMMRMRRM`
   assert.equal(deployRovers(input), expectedOutput)
 })
 
+QUnit.test('crashing rover doesnt move', function(assert) {
+  var input =
+`5 5
+2 2 N
+RMLM
+3 3 E
+L`
+  var expectedOutput =
+`3 2 N
+3 3 N`
+  assert.equal(deployRovers(input), expectedOutput)
+})
+
+
+QUnit.test('crashing rovers dont move', function(assert) {
+  var input =
+`5 5
+2 2 N
+RMLMMMRM
+3 3 E
+MRMMMLML`
+  var expectedOutput =
+`4 2 E
+5 3 N`
+  assert.equal(deployRovers(input), expectedOutput)
+})
+
 /* faces */
 QUnit.test('right face N', function(assert) {
-  var rov = new Rover(0, 0, 'N', 0, 0)
+  var rov = new Rover(0, 0, 'N', [], 0, 0)
   rov.turnRight()
   assert.equal(rov.face, 'E')
 })
 
 QUnit.test('right face W', function(assert) {
-  var rov = new Rover(0, 0, 'W', 0, 0)
+  var rov = new Rover(0, 0, 'W', [], 0, 0)
   rov.turnRight()
   assert.equal(rov.face, 'N')
 })
 
 QUnit.test('left face S', function(assert) {
-  var rov = new Rover(0, 0, 'S', 0, 0)
+  var rov = new Rover(0, 0, 'S', [], 0, 0)
   rov.turnLeft()
   assert.equal(rov.face, 'E')
 })
 
 QUnit.test('left face N', function(assert) {
-  var rov = new Rover(0, 0, 'N', 0, 0)
+  var rov = new Rover(0, 0, 'N', [], 0, 0)
   rov.turnLeft()
   assert.equal(rov.face, 'W')
 })
 
 /* movements */
 QUnit.test('move N', function(assert) {
-  var rov = new Rover(0, 0, 'N', 1, 1)
+  var rov = new Rover(0, 0, 'N', [], 1, 1)
   rov.move()
   var expectedOutput = [0, 1]
   assert.deepEqual([rov.x, rov.y], expectedOutput)
 })
 
 QUnit.test('move S invalid', function(assert) {
-  var rov = new Rover(0, 0, 'S', 1, 1)
+  var rov = new Rover(0, 0, 'S', [], 1, 1)
   rov.move()
   var expectedOutput = [0, 0]
   assert.deepEqual([rov.x, rov.y], expectedOutput)
 })
 
 QUnit.test('move W invalid', function(assert) {
-  var rov = new Rover(0, 0, 'W', 1, 1)
+  var rov = new Rover(0, 0, 'W', [], 1, 1)
   rov.move()
   var expectedOutput = [0, 0]
   assert.deepEqual([rov.x, rov.y], expectedOutput)
 })
-
 
 /* screen styling */
 QUnit.done(function (details) {
